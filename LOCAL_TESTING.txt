@@ -1,0 +1,48 @@
+⚡ LOCAL TESTING CHECKLIST
+
+Run these in order to test everything BEFORE deploying:
+
+1. BACKEND SETUP:
+   cd backend
+   python -m venv venv
+   venv\Scripts\activate  (Windows) or source venv/bin/activate (Mac/Linux)
+   pip install -r requirements.txt
+   
+2. CREATE .env FILE:
+   Copy .env.example to .env
+   Fill in these values:
+   - GOOGLE_CLOUD_PROJECT_ID
+   - GOOGLE_API_KEY
+   - GOOGLE_MAPS_API_KEY
+   - GCS_BUCKET_NAME
+   - DATABASE_URL (keep as is for now)
+   
+3. RUN BACKEND:
+   python -m uvicorn app.main:app --reload
+   
+   ✓ Should see: Uvicorn running on http://127.0.0.1:8000
+   ✓ Visit: http://localhost:8000/docs for API docs
+   ✓ Test: curl http://localhost:8000/api/v1/health
+   
+4. FRONTEND SETUP (new terminal):
+   cd frontend
+   npm install
+   npm run dev
+   
+   ✓ Should see: Local: http://localhost:5173
+   
+5. TEST THE APP:
+   - Open http://localhost:5173
+   - Fill in form (destination, budget, energy level)
+   - Click "Generate Itinerary"
+   - Check if it works without errors
+   
+6. CHECK LOGS:
+   - Backend terminal: Should show request logs
+   - Browser console: Should show no errors
+
+COMMON ISSUES:
+- Port 8000 already in use: Change to --port 8001
+- Module not found: Re-run pip install -r requirements.txt
+- API key invalid: Double-check in .env file
+- CORS error in browser: Backend .env CORS_ORIGINS needs frontend URL
